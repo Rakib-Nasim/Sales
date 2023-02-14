@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="display-6 text-center mt-4 bg-success pt-4 pb-4">Order create</div>
+  <div class="container" style="background-color: rgb(217, 220, 220);">
+    <form [formGroup]="orderForm">
+      <div class="row" style="padding: 20px;">
+        <div class="col-md-2 text-center" >
+          <div class="text-start mb-2 mt-4">Customer Name</div>
+          <div class="">
+            <ng-select  [items]="allCustomer" formControlName="customerId"
+            bindLabel="customerName" bindValue="id" class="from-control"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-3 text-center">
+          <div class="text-start mb-2 mt-4">Product Name</div>
+          <div class="">
+            <ng-select  [items]="allProduct" formControlName="productId"
+            bindLabel="productName" bindValue="id" class="from-control"
+            (change)="getPrice($event)"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="text-start mb-2 mt-4">Product Price</div>
+          <div class="">
+            <input type="number" class="from-control" [value]="productPrices" style="width: 95%;" readonly>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="text-start mb-2 mt-4">Product Unit</div>
+          <div class="">
+            <input type="number" #price class="from-control" formControlName="unit"
+            (change)="totalPrice(price.value)" style="width: 95%;" >
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="text-start mb-2 mt-4">Total Price</div>
+          <div class="">
+            <input type="number" class="from-control" formControlName="totalPrice"
+             style="width: 95%;" [value]="totalPrices" readonly>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="text-end"style="margin:10px;">
+      <button class="bg-success" (click)="saveOrder()"
+       style="border: none;border-radius: 5px;">
+        <span style="margin-bottom: 15px; padding: 20px;">Create Order</span>
+      </button>
+    </div>
+  </div>
+  <div class="container pb-4"  style="background-color: rgb(217, 220, 220);">
+    <div class="card">
+      <div class="card-header display-6 text-center bg-success">
+        Order List For A Customer
+      </div>
+      <div class="card-body">
+        <div class="col-md-2 text-center" >
+          <div class="text-start mb-2 mt-4">Customer Name</div>
+          <div class="">
+            <ng-select  [items]="allCustomer" placeholder="Select customer" (change)="getAllOrder($event)"
+            bindLabel="customerName" bindValue="id" class="from-control"></ng-select>
+          </div>
+        </div>
+        <table class="table table-striped mt-4">
+          <thead>
+            <tr class="text-center">
+              <th>Product Name</th>
+              <th>Product Price</th>
+              <th>Unit</th>
+              <th>Total Product Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of allOrder" class="text-center">
+              <td>{{item.productName}}</td>
+              <td>{{item.productPrice}}</td>
+              <td>{{item.unit}}</td>
+              <td>{{item.totalPrice}}</td>
+            </tr>
+          </tbody>
+           <button (click)="invoicegnrt()" class="btn-success"
+            style="margin: 20px;border-radius: 10px;border: none;padding: 10px;">
+             Invoice Generate
+           </button>
+            
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
